@@ -4,5 +4,27 @@
 		{
 			"path": "."
 		}
-	]
+	],
+
+    "build_systems": 
+    [
+        {
+            "name": "leetcodecpp",
+            "cmd": ["g++", "-g", "$file", "-std=c++17", "-o", "out/$file_base_name"],
+            // "file_regex": "^.+\/([^:\/]+):([0-9]+):?([0-9]+)?:? (.*)$",
+            "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+            "selector": "source.c++",
+            "working_dir": "$file_path",
+
+            "variants":
+            [
+                {
+                    "name": "Run",
+                    "cmd": ["wsl", "mkdir", "-p", "out", "&&", "g++", "$file", "-std=c++17", "-o", "out/$file_base_name", "&&", "$file_path/out/$file_base_name"],
+                    "shell": true
+                }
+            ]
+        }
+
+    ]
 }
