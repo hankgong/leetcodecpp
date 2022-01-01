@@ -12,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -24,6 +25,9 @@
 #include <assert.h>
 #include <climits>
 #include "hutility.hpp"
+
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
 using namespace std;
 
@@ -44,42 +48,37 @@ void LOG(const Head& head, const Args&... args )
 #endif
 
 /**
-https://leetcode-cn.com/problems/pascals-triangle/
+https://leetcode-cn.com/problems/plus-one/
 */
 
 class Solution {
 public:
-    vector<vector<int>> generate(int numRows) {
-        if (numRows == 0) return {};
-        if (numRows == 1) return {{1}};
+    vector<int> plusOne(vector<int>& digits) {
+        int c = 1;
+        vector<int> ret;
 
-        vector<vector<int>> ret = {{1}};
-
-        for (int i = 1; i < numRows; ++i) {
-            vector<int> lastRow = ret.back();
-            lastRow.insert(lastRow.begin(), 0);
-            lastRow.push_back(0);
-
-            vector<int> toadd;
-            for (int i = 0; i < lastRow.size()-1; ++i) {
-                toadd.push_back(lastRow[i]+lastRow[i+1]);
-            }
-            ret.push_back(toadd);
+        for(int i=digits.size()-1; i>=0; --i) {
+            digits[i] += c;
+            c = digits[i]/10;
+            ret.insert(ret.begin(), digits[i]%10);
         }
 
+        if (c) ret.insert(ret.begin(), c);
         return ret;
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("test results")
 {
-    Solution s;
+    Solution sol;
+    vector<int> digits;
 
-    LOG(s.generate(1));
-    LOG(s.generate(2));
-    LOG(s.generate(3));
-    LOG(s.generate(4));
+    digits= {1, 2, 3};
+    CHECK(sol.plusOne(digits) == vector<int>{1, 2, 4});
 
+    digits= {9, 9, 9};
+    CHECK(sol.plusOne(digits) == vector<int>{1, 0, 0, 0});
 
-    return 0;
+    digits={4,3,2,1};
+    CHECK(sol.plusOne(digits) == vector<int>{4, 3, 2, 2});
 }

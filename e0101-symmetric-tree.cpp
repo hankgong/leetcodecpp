@@ -12,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -25,6 +26,9 @@
 #include <climits>
 #include "hutility.hpp"
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 using namespace std;
 
 #define DEBUG
@@ -37,7 +41,7 @@ void LOG(const Head& head, const Args&... args )
     LOG(args...);
 }
 
-#define LLOG(...) cout<<"L"<<left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
 #else
 #define LOG(...) do {} while(0)
 #define LLOG(...) do {} while(0)
@@ -82,15 +86,12 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("test results")
 {
-    Solution s;
+    Solution sol;
 
-    LOG(s.isSymmetric(buildTree("1 2 2 3 4 3 3")));
-    LOG(s.isSymmetric(buildTree("1 2 2 # 3 # 3")));
-    LOG(s.isSymmetric(buildTree("1")));
-    LOG(s.isSymmetric(buildTree("1 2 2 1")));
-
-
-    return 0;
+    CHECK(sol.isSymmetric(buildTree("1 2 2 3 4 3 3")) == false);
+    CHECK(sol.isSymmetric(buildTree("1 2 2 # 3 # 3")) == false);
+    CHECK(sol.isSymmetric(buildTree("1")) == true);
+    CHECK(sol.isSymmetric(buildTree("1 2 2 1")) == false);
 }

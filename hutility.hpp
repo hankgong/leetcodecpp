@@ -266,6 +266,26 @@ ostream& operator<<(ostream& os, ListNode *node)
     return os;
 }
 
+
+/**
+ * @brief list2Str
+ * @details: list2Str returns the string of the list
+ *
+ * @param node - head pointer of the linked list of nodes
+ * @retrun - the string of the whole list
+ */
+string list2Str(ListNode *node)
+{
+    std::stringstream ss;
+    while (node) {
+        ss << node->val << "->";
+        node = node->next;
+    }
+    ss << "NULL";
+    return ss.str();
+}
+
+
 /******************************************************************************
  *
  *      tree section

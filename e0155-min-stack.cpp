@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -11,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -21,17 +23,32 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "hutility.hpp"
 #include <climits>
+#include "hutility.hpp"
 
-#define print(msg) std::cout << (msg) << std::endl // note: parens
-#define print2(m1, m2) std::cout << (m1) << " " << (m2) << std::endl // note: parens
-#define print3(m1, m2, m3) std::cout << (m1) << " " << (m2) << " " << (m3) << std::endl // note: parens
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
 using namespace std;
 
-/**
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
 
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
+
+/**
+https://leetcode.com/problems/min-stack/
 */
 
 class MinStack {
@@ -56,10 +73,10 @@ public:
         int ele = top();
         data.erase(data.end() - 1);
         if (ele == curMin) {
-            print(data.size());
-            print2(*data.begin(), *data.end());
+            LLOG(data.size());
+            LLOG(*data.begin(), *data.end());
             curMin = *min_element(data.begin(), data.end());
-            print2("why", curMin);
+            LLOG("why", curMin);
         }
     }
 
@@ -81,26 +98,24 @@ public:
  * int param_4 = obj->getMin();
  */
 
-int main(int argc, char const *argv[])
+TEST_CASE("test results")
 {
     MinStack obj = MinStack();
     obj.push(2147483646);
     obj.push(2147483646);
     obj.push(2147483647);
-    print(obj.top());
+    CHECK(obj.top() == 2147483647);
     obj.pop();
-    print(obj.getMin());
+    CHECK(obj.getMin() == 2147483646);
     obj.pop();
-    print(obj.getMin());
+    CHECK(obj.getMin() == 2147483646);
     obj.pop();
-    print(obj.getMin());
+    CHECK(obj.getMin() == 2147483646);
     obj.push(2147483647);
     obj.top();
-    print(obj.getMin());
-
+    CHECK(obj.getMin() == 2147483646);
 
 // ["MinStack","push","push","push","top","pop","getMin","pop","getMin","pop","push","top","getMin","push","top","getMin","pop","getMin"]
 // [[],[2147483646],[2147483646],[2147483647],[],[],[],[],[],[],[2147483647],[],[],[-2147483648],[],[],[],[]]
 
-    return 0;
 }

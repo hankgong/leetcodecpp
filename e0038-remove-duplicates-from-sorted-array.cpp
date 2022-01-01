@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -11,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -24,17 +26,29 @@
 #include <climits>
 #include "hutility.hpp"
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 using namespace std;
 
-#define println(msg) cout << (msg) << endl
-#define println2(m1, m2) cout << (m1) << " " << (m2) << endl
-#define println3(m1, m2, m3) cout << (m1) << " " << (m2) << " " << (m3) << endl
-#define println4(m1, m2, m3, m4) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << endl
-#define println5(m1, m2, m3, m4, m5) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << " " << (m5)<< endl
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
 
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
 
 /**
-
+https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 */
 
 class Solution {
@@ -63,16 +77,14 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("test results")
 {
     Solution s;
-    println(s.countAndSay(1));
-    println(s.countAndSay(2));
-    println(s.countAndSay(3));
-    println(s.countAndSay(4));
-    println(s.countAndSay(5));
-    println(s.countAndSay(6));
-    println(s.countAndSay(30));
-
-    return 0;
+    CHECK(s.countAndSay(1) == "1");
+    CHECK(s.countAndSay(2) == "11");
+    CHECK(s.countAndSay(3) == "21");
+    CHECK(s.countAndSay(4) == "1211");
+    CHECK(s.countAndSay(5) == "111221");
+    CHECK(s.countAndSay(6) == "312211");
+    CHECK(s.countAndSay(10) == "13211311123113112211");
 }

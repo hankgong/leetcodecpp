@@ -12,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -24,6 +25,9 @@
 #include <assert.h>
 #include <climits>
 #include "hutility.hpp"
+
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
 using namespace std;
 
@@ -44,38 +48,45 @@ void LOG(const Head& head, const Args&... args )
 #endif
 
 /**
-https://leetcode-cn.com/problems/plus-one/
+https://leetcode.com/problems/maximum-subarray/
 */
 
 class Solution {
 public:
-    vector<int> plusOne(vector<int>& digits) {
-        int c = 1;
-        vector<int> ret;
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, 0);
 
-        for(int i=digits.size()-1; i>=0; --i) {
-            digits[i] += c;
-            c = digits[i]/10;
-            ret.insert(ret.begin(), digits[i]%10);
+        dp[0] = nums[0];
+        int ret = nums[0];
+
+        for(int i=1; i<n; ++i) {
+            dp[i] = max(dp[i-1]+nums[i], nums[i]);
+            ret = max(ret, dp[i]);
         }
 
-        if (c) ret.insert(ret.begin(), c);
         return ret;
+    }
+
+    int maxSubArray_official(vector<int>& nums) {
+        int pre=0, maxAns = nums[0];
+
+        for(auto &x: nums) {
+            LLOG(x, pre, pre+x);
+            pre = max(pre+x, x);
+            maxAns = max(maxAns, pre);
+        }
+
+        return maxAns;
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("test results")
 {
-    Solution s;
-    vector<int> digits;
+    Solution sol;
 
-    digits= {1, 2, 3};
-    LOG(s.plusOne(digits));
+    vector<int> nums;
 
-    digits= {9, 9, 9};
-    LOG(s.plusOne(digits));
-
-    digits={4,3,2,1};
-    LOG(s.plusOne(digits));
-    return 0;
+    nums={-2,1,-3,4,-1,2,1,-5,4};
+    CHECK(sol.maxSubArray(nums) == 6);
 }

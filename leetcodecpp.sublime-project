@@ -20,7 +20,8 @@
             [
                 {
                     "name": "Run",
-                    "cmd": ["wsl", "mkdir", "-p", "out", "&&", "g++", "$file", "-std=c++17", "-o", "out/$file_base_name", "&&", "$file_path/out/$file_base_name"],
+                    // "cmd": ["wsl", "mkdir", "-p", "out", "&&", "g++", "$file", "-std=c++17", "-o", "out/$file_base_name", "&&", "$file_path/out/$file_base_name"],
+                    "cmd": ["wsl", "mkdir", "-p", "out", "&&", "wsl",  "g++", "`wslpath '$file'`", "-o", "out/$file_base_name", "&&", "wsl", "./out/$file_base_name"],
                     "shell": true
                 }
             ]
