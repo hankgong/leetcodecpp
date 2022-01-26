@@ -11,6 +11,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -25,10 +26,29 @@
 #include "hutility.hpp"
 #include <climits>
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 using namespace std;
 
-/**
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
 
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
+
+/**
+https://leetcode.com/problems/reverse-integer/
 */
 
 class Solution {
@@ -72,12 +92,10 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("testing the factorial function")
 {
-    Solution s;
-    cout << s.reverse(1534236469) << endl;
-    cout << s.reverse(-2147483648) << endl;
-    cout << s.reverse(-321) << endl;
-
-    return 0;
+    Solution sol;
+    CHECK(sol.reverse(1534236469) == 0);
+    CHECK(sol.reverse(-2147483648) == 0);
+    CHECK(sol.reverse(-321) == -123);
 }

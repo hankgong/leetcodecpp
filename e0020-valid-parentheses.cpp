@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -11,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -24,17 +26,29 @@
 #include <climits>
 #include "hutility.hpp"
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 using namespace std;
 
-#define println(msg) cout << (msg) << endl
-#define println2(m1, m2) cout << (m1) << " " << (m2) << endl
-#define println3(m1, m2, m3) cout << (m1) << " " << (m2) << " " << (m3) << endl
-#define println4(m1, m2, m3, m4) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << endl
-#define println5(m1, m2, m3, m4, m5) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << " " << (m5)<< endl
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
 
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
 
 /**
-https://leetcode-cn.com/problems/valid-parentheses/submissions/
+https://leetcode-cn.com/problems/valid-parentheses/
 */
 
 class Solution {
@@ -59,15 +73,13 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("testing the factorial function")
 {
-    Solution s;
-    println(s.isValid("()"));
-    println(s.isValid("()[]{}"));
-    println(s.isValid("(]"));
-    println(s.isValid("([)]"));
-    println(s.isValid("{[]}"));
-    println(s.isValid("]"));
-
-    return 0;
+    Solution sol;
+    CHECK(sol.isValid("()") == true);
+    CHECK(sol.isValid("()[]{}") == true);
+    CHECK(sol.isValid("(]") == false);
+    CHECK(sol.isValid("([)]") == false);
+    CHECK(sol.isValid("{[]}") == true);
+    CHECK(sol.isValid("]") == false);
 }

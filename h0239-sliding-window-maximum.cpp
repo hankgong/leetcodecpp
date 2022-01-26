@@ -1,0 +1,97 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <queue>
+#include <deque>
+#include <bitset>
+#include <iterator>
+#include <list>
+#include <stack>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <limits>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <climits>
+#include "hutility.hpp"
+
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
+using namespace std;
+
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
+
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
+
+/**
+https://leetcode-cn.com/problems/sliding-window-maximum/
+*/
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        priority_queue<pair<int, int>> tmp;
+        vector<int> ans;
+
+        for (int i = 0; i < nums.size(); ++i) {
+            tmp.push(make_pair(nums[i], i));
+            if(i<k-1) continue;
+
+            while(tmp.top().second <= i-k) {
+                tmp.pop();
+            }
+            // printpq(tmp);
+
+            ans.push_back(tmp.top().first);
+        }
+
+        return ans;
+    }
+};
+
+TEST_CASE("testing the factorial function")
+{
+    Solution sol;
+
+    vector<int> nums;
+
+    nums={1,3,-1,-3,5,3,6,7};
+    CHECK(sol.maxSlidingWindow(nums, 3) == std::vector<int>{3, 3, 5, 5, 6, 7} );
+
+    nums={1};
+    CHECK(sol.maxSlidingWindow(nums, 1) == std::vector<int>{1});
+
+    nums={1,-1};
+    CHECK(sol.maxSlidingWindow(nums, 1) == std::vector<int>{1, -1});
+
+    nums={9,11};
+    CHECK(sol.maxSlidingWindow(nums, 2) == std::vector<int>{11});
+
+    nums={4,-2};
+    CHECK(sol.maxSlidingWindow(nums, 2) == std::vector<int>{4});
+
+}

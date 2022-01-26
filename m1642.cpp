@@ -11,6 +11,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -99,7 +100,7 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    Solution s;
+    Solution_ s;
 
     vector<int> v;
     v = {4, 12, 2, 7, 3, 18, 20, 3, 19};

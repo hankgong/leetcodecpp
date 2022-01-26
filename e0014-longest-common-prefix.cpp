@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -11,6 +12,7 @@
 #include <stack>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -24,17 +26,29 @@
 #include <climits>
 #include "hutility.hpp"
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
 using namespace std;
 
-#define println(msg) cout << (msg) << endl
-#define println2(m1, m2) cout << (m1) << " " << (m2) << endl
-#define println3(m1, m2, m3) cout << (m1) << " " << (m2) << " " << (m3) << endl
-#define println4(m1, m2, m3, m4) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << endl
-#define println5(m1, m2, m3, m4, m5) cout << (m1) << " " << (m2) << " " << (m3) << " " << (m4) << " " << (m5)<< endl
+#define DEBUG
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
 
+#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
 
 /**
-
+https://leetcode.com/problems/longest-common-prefix/
 */
 
 class Solution {
@@ -44,7 +58,7 @@ public:
             return "";
         }
 
-        println(strs);
+        LOG(strs);
 
         string ret = "";
         for (int i = 0; i < strs[0].size(); i++) {
@@ -64,22 +78,20 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
+TEST_CASE("testing the factorial function")
 {
-    Solution s;
+    Solution sol;
 
     vector<string> v;
     v = {"flower", "flow", "flight"};
-    println(s.longestCommonPrefix(v));
+    CHECK(sol.longestCommonPrefix(v) == "fl");
 
     v = {"flower", "flower", "flower"};
-    println(s.longestCommonPrefix(v));
+    CHECK(sol.longestCommonPrefix(v) == "flower");
 
     v = {"", "flower", "flower"};
-    println(s.longestCommonPrefix(v));
+    CHECK(sol.longestCommonPrefix(v) == "");
 
     v =  {"dog", "racecar", "car"};
-    println(s.longestCommonPrefix(v));
-
-    return 0;
+    CHECK(sol.longestCommonPrefix(v) == "");
 }
