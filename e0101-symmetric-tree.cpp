@@ -1,51 +1,10 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <queue>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <list>
-#include <stack>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <limits>
-#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <climits>
+#define DEBUG
 #include "hutility.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 using namespace std;
-
-#define DEBUG
-#ifdef DEBUG
-void LOG() {cout << endl;}
-template<typename Head, typename... Args>
-void LOG(const Head& head, const Args&... args )
-{
-    cout << head << " ";
-    LOG(args...);
-}
-
-#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
-#else
-#define LOG(...) do {} while(0)
-#define LLOG(...) do {} while(0)
-#endif
 
 /**
 https://leetcode-cn.com/problems/symmetric-tree/
@@ -90,8 +49,14 @@ TEST_CASE("test results")
 {
     Solution sol;
 
-    CHECK(sol.isSymmetric(buildTree("1 2 2 3 4 3 3")) == false);
-    CHECK(sol.isSymmetric(buildTree("1 2 2 # 3 # 3")) == false);
-    CHECK(sol.isSymmetric(buildTree("1")) == true);
-    CHECK(sol.isSymmetric(buildTree("1 2 2 1")) == false);
+    TreeNode* root;
+
+    root = buildTree("1,2,2,3,4,4,3");
+    LOG(root);
+    CHECK(sol.isSymmetric(root) == true);
+
+    root = buildTree("1,2,2,null,3,null,3");
+    LOG(root);
+    CHECK(sol.isSymmetric(root) == false);
+
 }

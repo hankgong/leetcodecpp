@@ -1,51 +1,10 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <queue>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <list>
-#include <stack>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <limits>
-#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <climits>
+#define DEBUG
 #include "hutility.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 using namespace std;
-
-#define DEBUG
-#ifdef DEBUG
-void LOG() {cout << endl;}
-template<typename Head, typename... Args>
-void LOG(const Head& head, const Args&... args )
-{
-    cout << head << " ";
-    LOG(args...);
-}
-
-#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
-#else
-#define LOG(...) do {} while(0)
-#define LLOG(...) do {} while(0)
-#endif
 
 /**
 https://leetcode.com/problems/spiral-matrix-ii/
@@ -80,11 +39,19 @@ public:
     }
 };
 
-TEST_CASE("test results")
+TEST_CASE("Doctest cases")
 {
     Solution sol;
+
+    int n;
     CHECK(sol.generateMatrix(1) == vector<vector<int>>{{1}});
     CHECK(sol.generateMatrix(2) == vector<vector<int>>{{1, 2}, {4, 3}});
     CHECK(sol.generateMatrix(3) == vector<vector<int>>{{1, 2, 3}, {8, 9, 4}, {7, 6, 5}});
     CHECK(sol.generateMatrix(5) == vector<vector<int>>{{1, 2, 3, 4, 5}, {16, 17, 18, 19, 6}, {15, 24, 25, 20, 7}, {14, 23, 22, 21, 8}, {13, 12, 11, 10, 9}});
+
+    n = 3;
+    CHECK(sol.generateMatrix(n) == vector<vector<int>>{{1,2,3},{8,9,4},{7,6,5}});
+
+    n = 1;
+    CHECK(sol.generateMatrix(n) == vector<vector<int>>{{1}});
 }

@@ -1,51 +1,10 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <queue>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <list>
-#include <stack>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <limits>
-#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unordered_set>
-#include <assert.h>
+#define DEBUG
 #include "hutility.hpp"
-#include <climits>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 using namespace std;
-
-#define DEBUG
-#ifdef DEBUG
-void LOG() {cout << endl;}
-template<typename Head, typename... Args>
-void LOG(const Head& head, const Args&... args )
-{
-    cout << head << " ";
-    LOG(args...);
-}
-
-#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
-#else
-#define LOG(...) do {} while(0)
-#define LLOG(...) do {} while(0)
-#endif
 
 /**
 https://leetcode.com/problems/reverse-integer/
@@ -92,10 +51,24 @@ public:
     }
 };
 
-TEST_CASE("testing the factorial function")
+TEST_CASE("Doctest cases")
 {
     Solution sol;
-    CHECK(sol.reverse(1534236469) == 0);
-    CHECK(sol.reverse(-2147483648) == 0);
-    CHECK(sol.reverse(-321) == -123);
+
+    int x;
+
+    x = 123;
+    CHECK(sol.reverse(x) == 321);
+
+    x = -123;
+    CHECK(sol.reverse(x) == -321);
+
+    x = 120;
+    CHECK(sol.reverse(x) == 21);
+
+    x = 1534236469;
+    CHECK(sol.reverse(x) == 0);
+
+    x = -2147483648;
+    CHECK(sol.reverse(x) == 0);
 }

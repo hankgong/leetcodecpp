@@ -1,8 +1,31 @@
 #include <iostream>
+#include <iomanip>
+#include <string>
 #include <vector>
-#include <unordered_map>
 #include <algorithm>
+#include <sstream>
+#include <queue>
+#include <deque>
+#include <bitset>
 #include <iterator>
+#include <list>
+#include <stack>
+#include <map>
+#include <unordered_map>
+#include <set>
+#include <unordered_set>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <limits>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <climits>
+
 #include <regex>
 #include <typeinfo>
 
@@ -10,6 +33,20 @@ using namespace std;
 
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
+#ifdef DEBUG
+void LOG() {cout << endl;}
+template<typename Head, typename... Args>
+void LOG(const Head& head, const Args&... args )
+{
+    cout << head << " ";
+    LOG(args...);
+}
+
+#define LLOG(...) cout<<"L"<<left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
+#else
+#define LOG(...) do {} while(0)
+#define LLOG(...) do {} while(0)
+#endif
 
 /******************************************************************************
  *
@@ -324,7 +361,7 @@ TreeNode *buildTree(string treeStr) {
     bool isRight = false;
     TreeNode *tnode;
     while (iter != lst.end()) {
-        if (*iter != "#") {
+        if (*iter != "null" && *iter != "#") {
             tnode = new TreeNode(stoi(*iter));
             toInsertNodes.push(tnode);
         } else {

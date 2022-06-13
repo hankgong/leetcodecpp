@@ -1,51 +1,10 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <queue>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <list>
-#include <stack>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <limits>
-#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <climits>
+#define DEBUG
 #include "hutility.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 using namespace std;
-
-#define DEBUG
-#ifdef DEBUG
-void LOG() {cout << endl;}
-template<typename Head, typename... Args>
-void LOG(const Head& head, const Args&... args )
-{
-    cout << head << " ";
-    LOG(args...);
-}
-
-#define LLOG(...) cout<<"L"<<left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
-#else
-#define LOG(...) do {} while(0)
-#define LLOG(...) do {} while(0)
-#endif
 
 /**
 https://leetcode-cn.com/problems/plus-one/
@@ -68,7 +27,7 @@ public:
     }
 };
 
-TEST_CASE("test results")
+TEST_CASE("Doctest cases")
 {
     Solution sol;
     vector<int> digits;
@@ -81,4 +40,13 @@ TEST_CASE("test results")
 
     digits={4,3,2,1};
     CHECK(sol.plusOne(digits) == vector<int>{4, 3, 2, 2});
+
+    digits = {1,2,3};
+    CHECK(sol.plusOne(digits) == vector<int>{1,2,4});
+
+    digits = {4,3,2,1};
+    CHECK(sol.plusOne(digits) == vector<int>{4,3,2,2});
+
+    digits = {9};
+    CHECK(sol.plusOne(digits) == vector<int>{1,0});
 }

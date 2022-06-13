@@ -10,7 +10,8 @@
     [
         {
             "name": "leetcodecpp",
-            "cmd": ["g++", "-g", "$file", "-std=c++17", "-o", "out/$file_base_name"],
+            // "cmd": ["g++", "-g", "$file", "-std=c++17", "-o", "out/$file_base_name"],
+            "cmd": ["g++", "-g", "$file", "-std=c++17", "-o", "out/test"],
             // "file_regex": "^.+\/([^:\/]+):([0-9]+):?([0-9]+)?:? (.*)$",
             "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
             "selector": "source.c++",
@@ -19,12 +20,25 @@
             "variants":
             [
                 {
-                    "name": "Run",
+                    "name": "WSL Run",
                     // "cmd": ["wsl", "mkdir", "-p", "out", "&&", "g++", "$file", "-std=c++17", "-o", "out/$file_base_name", "&&", "$file_path/out/$file_base_name"],
-                    "cmd": ["wsl", "mkdir", "-p", "out", "&&", "wsl",  "g++", "`wslpath '$file'`", "-o", "out/$file_base_name", "&&", "wsl", "./out/$file_base_name"],
+                    // "cmd": ["wsl", "mkdir", "-p", "out", "&&", "wsl",  "g++", "`wslpath '$file'`", "-o", "out/$file_base_name", "&&", "wsl", "./out/$file_base_name", "-fc"],
+                    "cmd": ["wsl", "mkdir", "-p", "out", "&&", "wsl",  "g++", "`wslpath '$file'`", "-o", "out/test", "&&", "wsl", "./out/test", "-fc"],
+                    "shell": true,
+
+                    "target": "ansi_color_build",
+                    // "syntax": "Packages/ANSIescape/ANSI.sublime-syntax"
+                    "syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+                },
+                {
+                    "name": "Mingw Run",
+                    "cmd": ["g++", "$file", "-o", "out/test.exe", "&&", "$project_path/out/test.exe", "--force-colors=true"],
                     "shell": true
                 }
-            ]
+            ],
+            // "target": "ansi_color_build",
+            // "syntax": "Packages/ANSIescape/ANSI.sublime-syntax"
+            // "syntax": "Packages/ANSIescape/ANSI.tmLanguage"
         }
 
     ]

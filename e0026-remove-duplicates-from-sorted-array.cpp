@@ -1,52 +1,10 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <queue>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <list>
-#include <stack>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <limits>
-#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <climits>
+#define DEBUG
 #include "hutility.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
 using namespace std;
-
-#define DEBUG
-#ifdef DEBUG
-void LOG() {cout << endl;}
-template<typename Head, typename... Args>
-void LOG(const Head& head, const Args&... args )
-{
-    cout << head << " ";
-    LOG(args...);
-}
-
-#define LLOG(...) cout<<"L"<<std::left<<setw(4)<<__LINE__;LOG(__VA_ARGS__)
-#else
-#define LOG(...) do {} while(0)
-#define LLOG(...) do {} while(0)
-#endif
-
 
 /**
 https://leetcode.com/problems/remove-duplicates-from-sorted-array/
@@ -71,20 +29,23 @@ public:
 TEST_CASE("test results")
 {
     Solution sol;
-    vector<int> v;
-    v = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-    CHECK(sol.removeDuplicates(v) == 5);
-    CHECK(v == vector<int>{0, 1, 2, 3, 4, 2, 2, 3, 3, 4});
+    vector<int> nums;
+    nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+    CHECK(sol.removeDuplicates(nums) == 5);
+    CHECK(nums == vector<int>{0, 1, 2, 3, 4, 2, 2, 3, 3, 4});
 
-    v = {0};
-    CHECK(sol.removeDuplicates(v) == 1);
-    CHECK(v == vector<int>{0});
+    nums = {0};
+    CHECK(sol.removeDuplicates(nums) == 1);
+    CHECK(nums == vector<int>{0});
 
-    v = {};
-    CHECK(sol.removeDuplicates(v) == 0);
-    CHECK(v == vector<int>{});
+    nums = {};
+    CHECK(sol.removeDuplicates(nums) == 0);
+    CHECK(nums == vector<int>{});
 
-    v = {1, 2, 3};
-    CHECK(sol.removeDuplicates(v) == 3);
-    CHECK(v == vector<int>{1, 2, 3}); 
+    nums = {1, 2, 3};
+    CHECK(sol.removeDuplicates(nums) == 3);
+    CHECK(nums == vector<int>{1, 2, 3}); 
+    
+    nums={1,1,2};
+    CHECK(sol.removeDuplicates(nums) == 2);
 }
