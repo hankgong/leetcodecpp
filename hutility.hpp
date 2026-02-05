@@ -34,6 +34,14 @@ using namespace std;
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
 #ifdef DEBUG
+
+template <typename T>
+std::ostream& operator<<(std::ostream&, const std::vector<T>&);
+
+template<typename S, typename T>
+std::ostream& operator<<(std::ostream&,
+                          const std::unordered_map<S, T>&);
+
 void LOG() {cout << endl;}
 template<typename Head, typename... Args>
 void LOG(const Head& head, const Args&... args )

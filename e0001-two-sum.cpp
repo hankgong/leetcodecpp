@@ -17,7 +17,8 @@ public:
         vector<int> ret;
 
         for (int i=0; i<nums.size(); i++) {
-            if (tmap.find(target - nums[i]) != tmap.end()) {
+            if (tmap.contains(target - nums[i])) { // C++20 new api
+            // if (tmap.find(target - nums[i]) != tmap.end()) {
                 ret.push_back(tmap[target-nums[i]]);
                 ret.push_back(i);
                 return ret;
